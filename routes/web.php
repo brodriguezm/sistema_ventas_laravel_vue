@@ -12,5 +12,11 @@
 */
 
 Route::get('/', function () {
-    return view('content/principal');
+    return view('content/content');
 });
+
+Route::get('/categorias', 'CategoriaController@index');
+Route::post('/categorias/registrar', 'CategoriaController@store');
+Route::put('/categorias/actualizar', 'CategoriaController@update');
+Route::put('/categorias/activar', 'CategoriaController@activar');
+Route::put('/categorias/desactivar', 'CategoriaController@desactivar');
