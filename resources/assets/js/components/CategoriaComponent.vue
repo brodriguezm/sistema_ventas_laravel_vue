@@ -97,21 +97,22 @@
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input">Nombre</label>
                                 <div class="col-md-9">
-                                    <input type="text" id="nombre" name="nombre" v-model="nombre" class="form-control" placeholder="Nombre de categoría">
-                                    <span class="help-block">(*) Ingrese el nombre de la categoría</span>
+                                    <input type="text" id="nombre" name="nombre" v-model="nombre" class="form-control" placeholder="Ingrese un nombre de categoría">
+                                    <small class="msj-error" v-if="msjError.nombre" v-text="msjError.nombre"></small>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="email-input">Descripción</label>
                                 <div class="col-md-9">
-                                    <input type="email" id="descripcion" name="descripcion" v-model="descripcion" class="form-control" placeholder="Enter Email">
+                                    <input type="email" id="descripcion" name="descripcion" v-model="descripcion" class="form-control" placeholder="Ingrese una descripción">
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" @click="hiddeModal()">Cerrar</button>
-                        <button type="button" class="btn btn-primary">Guardar</button>
+                        <button type="button" class="btn btn-primary" v-if="typeModal==1" @click="createCategoria()">Guardar</button>
+                        <button type="button" class="btn btn-primary" v-if="typeModal==2" @click="updateCategoria()">Actualizar</button>
                     </div>
                 </div>
                 <!-- /.modal-content -->
@@ -149,24 +150,76 @@
     export default {
         data() {
             return {
+                path: '/laravel/mi-sistema/public/',
+                categoriaId : null,
                 nombre: null,
                 descripcion: null,
                 listaCategorias: [],
                 flagModal: 0,
                 typeModal: 0, //1 = create; 2 = update
-                titleModal: null
+                titleModal: null,
+                msjError:{
+                    nombre: null,
+                    descripcion: null
+                }
             }
         },
         methods: {
             listarCategorias(){
                 let me = this;
-                axios.get('/laravel/mi-sistema/public/categorias')
+                axios.get(me.path+'categorias')
                 .then(function (response) {
                     me.listaCategorias = response.data;
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
+            },
+            validateCategoria(){
+                this.msjError.nombre = null;
+                this.msjError.descripcion = null;
+
+                if(!this.nombre){
+                    this.msjError.nombre = 'El campo nombre no puede ser nulo'
+                    return true;
+                }
+            },
+            createCategoria(){
+                if(this.validateCategoria())
+                    return;
+
+                let me = this;
+                let data = {
+                    'nombre': this.nombre,
+                    'descripcion': this.descripcion
+                }
+                axios.post(me.path+'categorias/registrar', data)
+                    .then(reponse => {
+                        me.hiddeModal();
+                        me.listarCategorias();
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            },
+            updateCategoria(){
+                if(this.validateCategoria())
+                    return;
+                    
+                let me = this;
+                let data = {
+                    'id': this.categoriaId,
+                    'nombre': this.nombre,
+                    'descripcion': this.descripcion
+                }
+                axios.put(me.path+'categorias/actualizar', data)
+                    .then(reponse => {
+                        me.hiddeModal();
+                        me.listarCategorias();
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
             },
             showModal(action, data=null){
                 if(action == "create"){
@@ -180,13 +233,16 @@
                     this.flagModal = 1;
                     this.typeModal = 2;
                     this.titleModal = "Actualizar categoría";
+                    this.categoriaId = data.id;
                     this.nombre = data.nombre;
                     this.descripcion = data.descripcion;
+
                 }
             },
             hiddeModal(){
                 this.flagModal = 0;
                 this.typeModal = 1;
+                this.categoriaId = null;
                 this.nombre = null;
                 this.descripcion = null;
             }
@@ -206,6 +262,11 @@
     display: block!important;
     opacity: 1;
     background-color: #d4d4d4a1; 
+}
+
+.msj-error{
+    color:red;
+    font-weight: bold;
 }
 </style>
 

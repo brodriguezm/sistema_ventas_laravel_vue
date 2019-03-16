@@ -48767,7 +48767,7 @@ exports = module.exports = __webpack_require__(43)(false);
 
 
 // module
-exports.push([module.i, "\n.modal-content{\r\n    position: absolute!important;\r\n    width: 100%!important;\n}\n.show-modal{\r\n    display: block!important;\r\n    opacity: 1;\r\n    background-color: #d4d4d4a1;\n}\r\n", ""]);
+exports.push([module.i, "\n.modal-content{\r\n    position: absolute!important;\r\n    width: 100%!important;\n}\n.show-modal{\r\n    display: block!important;\r\n    opacity: 1;\r\n    background-color: #d4d4d4a1;\n}\n.msj-error{\r\n    color:red;\r\n    font-weight: bold;\n}\r\n", ""]);
 
 // exports
 
@@ -49377,24 +49377,71 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
+            path: '/laravel/mi-sistema/public/',
+            categoriaId: null,
             nombre: null,
             descripcion: null,
             listaCategorias: [],
             flagModal: 0,
             typeModal: 0, //1 = create; 2 = update
-            titleModal: null
+            titleModal: null,
+            msjError: {
+                nombre: null,
+                descripcion: null
+            }
         };
     },
 
     methods: {
         listarCategorias: function listarCategorias() {
             var me = this;
-            axios.get('/laravel/mi-sistema/public/categorias').then(function (response) {
+            axios.get(me.path + 'categorias').then(function (response) {
                 me.listaCategorias = response.data;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        validateCategoria: function validateCategoria() {
+            this.msjError.nombre = null;
+            this.msjError.descripcion = null;
+
+            if (!this.nombre) {
+                this.msjError.nombre = 'El campo nombre no puede ser nulo';
+                return true;
+            }
+        },
+        createCategoria: function createCategoria() {
+            if (this.validateCategoria()) return;
+
+            var me = this;
+            var data = {
+                'nombre': this.nombre,
+                'descripcion': this.descripcion
+            };
+            axios.post(me.path + 'categorias/registrar', data).then(function (reponse) {
+                me.hiddeModal();
+                me.listarCategorias();
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        updateCategoria: function updateCategoria() {
+            if (this.validateCategoria()) return;
+
+            var me = this;
+            var data = {
+                'id': this.categoriaId,
+                'nombre': this.nombre,
+                'descripcion': this.descripcion
+            };
+            axios.put(me.path + 'categorias/actualizar', data).then(function (reponse) {
+                me.hiddeModal();
+                me.listarCategorias();
             }).catch(function (error) {
                 console.log(error);
             });
@@ -49412,6 +49459,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.flagModal = 1;
                 this.typeModal = 2;
                 this.titleModal = "Actualizar categoría";
+                this.categoriaId = data.id;
                 this.nombre = data.nombre;
                 this.descripcion = data.descripcion;
             }
@@ -49419,6 +49467,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         hiddeModal: function hiddeModal() {
             this.flagModal = 0;
             this.typeModal = 1;
+            this.categoriaId = null;
             this.nombre = null;
             this.descripcion = null;
         }
@@ -49601,7 +49650,7 @@ var render = function() {
                             type: "text",
                             id: "nombre",
                             name: "nombre",
-                            placeholder: "Nombre de categoría"
+                            placeholder: "Ingrese un nombre de categoría"
                           },
                           domProps: { value: _vm.nombre },
                           on: {
@@ -49614,9 +49663,14 @@ var render = function() {
                           }
                         }),
                         _vm._v(" "),
-                        _c("span", { staticClass: "help-block" }, [
-                          _vm._v("(*) Ingrese el nombre de la categoría")
-                        ])
+                        _vm.msjError.nombre
+                          ? _c("small", {
+                              staticClass: "msj-error",
+                              domProps: {
+                                textContent: _vm._s(_vm.msjError.nombre)
+                              }
+                            })
+                          : _vm._e()
                       ])
                     ]),
                     _vm._v(" "),
@@ -49645,7 +49699,7 @@ var render = function() {
                             type: "email",
                             id: "descripcion",
                             name: "descripcion",
-                            placeholder: "Enter Email"
+                            placeholder: "Ingrese una descripción"
                           },
                           domProps: { value: _vm.descripcion },
                           on: {
@@ -49678,11 +49732,37 @@ var render = function() {
                   [_vm._v("Cerrar")]
                 ),
                 _vm._v(" "),
-                _c(
-                  "button",
-                  { staticClass: "btn btn-primary", attrs: { type: "button" } },
-                  [_vm._v("Guardar")]
-                )
+                _vm.typeModal == 1
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.createCategoria()
+                          }
+                        }
+                      },
+                      [_vm._v("Guardar")]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.typeModal == 2
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.updateCategoria()
+                          }
+                        }
+                      },
+                      [_vm._v("Actualizar")]
+                    )
+                  : _vm._e()
               ])
             ])
           ]
