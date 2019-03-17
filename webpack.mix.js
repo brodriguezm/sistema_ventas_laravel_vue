@@ -25,7 +25,8 @@ scripts([
    'resources/assets/layout/js/bootstrap.min.js',
    'resources/assets/layout/js/Chart.min.js',
    'resources/assets/layout/js/pace.min.js',
-   'resources/assets/layout/js/template.js'
+   'resources/assets/layout/js/template.js',
+   'resources/assets/layout/js/sweetalert2.all.min.js'
 ], 'public/js/layout.js')
 .js([
    'resources/assets/js/app.js'

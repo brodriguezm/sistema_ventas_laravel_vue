@@ -43,8 +43,11 @@
                                     <button type="button" class="btn btn-warning btn-sm" @click="showModal('update',categoria)">
                                         <i class="icon-pencil"></i>
                                     </button> &nbsp;
-                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalEliminar">
-                                        <i class="icon-trash"></i>
+                                    <button type="button" v-if="categoria.condicion" @click="changeState(categoria)" class="btn btn-danger btn-sm" >
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                    <button type="button" v-else @click="changeState(categoria)" class="btn btn-danger btn-sm" >
+                                        <i class="fa fa-check"></i>
                                     </button>
                                 </td>
                                 <td v-text="categoria.nombre"></td>
@@ -120,29 +123,6 @@
             <!-- /.modal-dialog -->
         </div>
         <!--Fin del modal-->
-        <!-- Inicio del modal Eliminar -->
-        <div class="modal fade" id="modalEliminar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-danger" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Eliminar Categoría</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Estas seguro de eliminar la categoría?</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-danger">Eliminar</button>
-                    </div>
-                </div>
-                <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
-        </div>
-        <!-- Fin del modal Eliminar -->
     </main>
 </template>
 
@@ -205,7 +185,7 @@
             updateCategoria(){
                 if(this.validateCategoria())
                     return;
-                    
+
                 let me = this;
                 let data = {
                     'id': this.categoriaId,
@@ -220,6 +200,46 @@
                     .catch(error => {
                         console.log(error);
                     });
+            },
+            changeState(categoria){
+                //alert('eliminar'+ categoria.condicion);
+                let me = this;
+                let url = "",
+                    textMsj = "";
+                if(categoria.condicion){
+                    url = "categorias/desactivar";
+                    textMsj = 'Se desactivará el registro'
+                }
+                else{
+                    url = "categorias/activar";
+                    textMsj = 'Se activará el registro'
+                }
+
+                Swal.fire({
+                title: '¿Estás seguro?',
+                text: textMsj,
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si',
+                cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.value) {
+                        axios.put(me.path+url, categoria)
+                        .then(reponse => {
+                            me.listarCategorias();
+                            swalWithBootstrapButtons.fire(
+                            'Hecho!',
+                            'El registro a sido'+(categoria.condicion)?'desactivado':'activado',
+                            'success'
+                            );
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        });
+                    }
+                })
             },
             showModal(action, data=null){
                 if(action == "create"){

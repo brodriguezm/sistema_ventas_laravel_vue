@@ -49358,26 +49358,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -49444,6 +49424,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 me.listarCategorias();
             }).catch(function (error) {
                 console.log(error);
+            });
+        },
+        changeState: function changeState(categoria) {
+            //alert('eliminar'+ categoria.condicion);
+            var me = this;
+            var url = "",
+                textMsj = "";
+            if (categoria.condicion) {
+                url = "categorias/desactivar";
+                textMsj = 'Se desactivará el registro';
+            } else {
+                url = "categorias/activar";
+                textMsj = 'Se activará el registro';
+            }
+
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: textMsj,
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si',
+                cancelButtonText: 'Cancelar'
+            }).then(function (result) {
+                if (result.value) {
+                    axios.put(me.path + url, categoria).then(function (reponse) {
+                        me.listarCategorias();
+                        swalWithBootstrapButtons.fire('Hecho!',  true ? 'desactivado' : 'activado', 'success');
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                }
             });
         },
         showModal: function showModal(action) {
@@ -49539,7 +49552,33 @@ var render = function() {
                         [_c("i", { staticClass: "icon-pencil" })]
                       ),
                       _vm._v("  \n                                "),
-                      _vm._m(3, true)
+                      categoria.condicion
+                        ? _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-danger btn-sm",
+                              attrs: { type: "button" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.changeState(categoria)
+                                }
+                              }
+                            },
+                            [_c("i", { staticClass: "fa fa-trash" })]
+                          )
+                        : _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-danger btn-sm",
+                              attrs: { type: "button" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.changeState(categoria)
+                                }
+                              }
+                            },
+                            [_c("i", { staticClass: "fa fa-check" })]
+                          )
                     ]),
                     _vm._v(" "),
                     _c("td", {
@@ -49566,7 +49605,7 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _vm._m(4)
+          _vm._m(3)
         ])
       ])
     ]),
@@ -49768,9 +49807,7 @@ var render = function() {
           ]
         )
       ]
-    ),
-    _vm._v(" "),
-    _vm._m(5)
+    )
   ])
 }
 var staticRenderFns = [
@@ -49849,23 +49886,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "btn btn-danger btn-sm",
-        attrs: {
-          type: "button",
-          "data-toggle": "modal",
-          "data-target": "#modalEliminar"
-        }
-      },
-      [_c("i", { staticClass: "icon-trash" })]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("nav", [
       _c("ul", { staticClass: "pagination" }, [
         _c("li", { staticClass: "page-item" }, [
@@ -49905,81 +49925,6 @@ var staticRenderFns = [
         ])
       ])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "modal fade",
-        staticStyle: { display: "none" },
-        attrs: {
-          id: "modalEliminar",
-          tabindex: "-1",
-          role: "dialog",
-          "aria-labelledby": "myModalLabel",
-          "aria-hidden": "true"
-        }
-      },
-      [
-        _c(
-          "div",
-          {
-            staticClass: "modal-dialog modal-danger",
-            attrs: { role: "document" }
-          },
-          [
-            _c("div", { staticClass: "modal-content" }, [
-              _c("div", { staticClass: "modal-header" }, [
-                _c("h4", { staticClass: "modal-title" }, [
-                  _vm._v("Eliminar Categoría")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "close",
-                    attrs: {
-                      type: "button",
-                      "data-dismiss": "modal",
-                      "aria-label": "Close"
-                    }
-                  },
-                  [
-                    _c("span", { attrs: { "aria-hidden": "true" } }, [
-                      _vm._v("×")
-                    ])
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "modal-body" }, [
-                _c("p", [_vm._v("Estas seguro de eliminar la categoría?")])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "modal-footer" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-secondary",
-                    attrs: { type: "button", "data-dismiss": "modal" }
-                  },
-                  [_vm._v("Cerrar")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  { staticClass: "btn btn-danger", attrs: { type: "button" } },
-                  [_vm._v("Eliminar")]
-                )
-              ])
-            ])
-          ]
-        )
-      ]
-    )
   }
 ]
 render._withStripped = true
