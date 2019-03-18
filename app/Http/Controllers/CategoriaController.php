@@ -3,39 +3,42 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+//use Illuminate\Support\Facades\DB;
 use App\Categoria;
 
 class CategoriaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $categorias = Categoria::all();
-        return $categorias;
+    public function validateRequest($request){
+        if(!$request->ajax()) return true;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function index(Request $request)
     {
-        //
+        //if($this->validateRequest($request)) return redirect('/');
+        //$categorias = Categoria::all();
+        //return $categorias;
+        
+        //Paginacion con Query Builder
+        //$categorias = DB::table('categorias')->paginate(2);
+        //Paginacion con Eloquent
+        $categorias = Categoria::paginate(2);
+
+        return [
+            'pagination' => [
+                'total'         => $categorias->total(),
+                'current_page'  => $categorias->currentPage(),
+                'per_page'      => $categorias->perPage(),
+                'last_page'     => $categorias->lastPage(),
+                'from'          => $categorias->firstItem(),
+                'to'            => $categorias->lastItem()
+            ],
+            'categorias' => $categorias
+        ];
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
+        if($this->validateRequest($request)) return redirect('/');
         $categoria = new Categoria();
         $categoria->nombre = $request->nombre;
         $categoria->descripcion = $request->descripcion;
@@ -43,16 +46,9 @@ class CategoriaController extends Controller
         $categoria->save();
     }
 
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request)
     {
+        if($this->validateRequest($request)) return redirect('/');
         $categoria = Categoria::findOrFail($request->id);
         $categoria->nombre = $request->nombre;
         $categoria->descripcion = $request->descripcion;
@@ -62,6 +58,7 @@ class CategoriaController extends Controller
 
     public function activate(Request $request)
     {
+        if($this->validateRequest($request)) return redirect('/');
         $categoria = Categoria::findOrFail($request->id);
         $categoria->condicion = '1';
         $categoria->save();
@@ -69,6 +66,7 @@ class CategoriaController extends Controller
 
     public function desactivate(Request $request)
     {
+        if($this->validateRequest($request)) return redirect('/');
         $categoria = Categoria::findOrFail($request->id);
         $categoria->condicion = '0';
         $categoria->save();
