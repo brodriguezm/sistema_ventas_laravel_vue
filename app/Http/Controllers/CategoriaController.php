@@ -21,7 +21,14 @@ class CategoriaController extends Controller
         //Paginacion con Query Builder
         //$categorias = DB::table('categorias')->paginate(2);
         //Paginacion con Eloquent
-        $categorias = Categoria::paginate(2);
+        $textFilter = $request->textFilter;
+        $typeFilter = $request->typeFilter;
+
+        if($textFilter != ''){
+            $categorias = Categoria::where($typeFilter, 'like', '%'.$textFilter.'%')->orderBy('id', 'desc')->paginate(2);
+        }else{
+            $categorias = Categoria::orderBy('id', 'desc')->paginate(2);
+        }
 
         return [
             'pagination' => [

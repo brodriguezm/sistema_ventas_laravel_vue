@@ -19,12 +19,18 @@
                     <div class="form-group row">
                         <div class="col-md-6">
                             <div class="input-group">
-                                <select class="form-control col-md-3" id="opcion" name="opcion">
+                                <select class="form-control col-md-3" id="opcion" name="opcion" v-model="typeFilter">
                                     <option value="nombre">Nombre</option>
                                     <option value="descripcion">Descripción</option>
                                 </select>
-                                <input type="text" id="texto" name="texto" class="form-control" placeholder="Texto a buscar">
-                                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
+                                <input type="text" 
+                                    id="texto" 
+                                    name="texto" 
+                                    v-model.trim="textFilter" 
+                                    @keyup.enter="listarCategorias(1, textFilter, typeFilter)"  
+                                    class="form-control" 
+                                    placeholder="Texto a buscar">
+                                <button type="submit" class="btn btn-primary" @click="listarCategorias(1, textFilter, typeFilter)"><i class="fa fa-search"></i> Buscar</button>
                             </div>
                         </div>
                     </div>
@@ -62,15 +68,15 @@
                     <nav>
                         <ul class="pagination">
                             <li class="page-item" v-if="pagination.current_page > 1">
-                                <a class="page-link" href="#"  @click.prevent="cambiarPagina(pagination.current_page-1)">Ant</a>
+                                <a class="page-link" href="#"  @click.prevent="cambiarPagina(pagination.current_page-1, textFilter, typeFilter)">Ant</a>
                             </li>
                             <li class="page-item" 
                                 v-for="page in pagesNumber" :key="page"
                                 :class="[page == isActivated ? 'activate' : '']">
-                                <a class="page-link" href="#" @click.prevent="cambiarPagina(page)" v-text="page"></a>
+                                <a class="page-link" href="#" @click.prevent="cambiarPagina(page, textFilter, typeFilter)" v-text="page"></a>
                             </li>
                             <li class="page-item" v-if="pagination.current_page < pagination.last_page">
-                                <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page+1)">Sig</a>
+                                <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page+1, textFilter, typeFilter)">Sig</a>
                             </li>
                         </ul>
                     </nav>
@@ -93,7 +99,10 @@
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input">Nombre</label>
                                 <div class="col-md-9">
-                                    <input type="text" id="nombre" name="nombre" v-model="nombre" class="form-control" placeholder="Ingrese un nombre de categoría">
+                                    <input type="text" id="nombre" name="nombre" 
+                                        v-model="nombre"
+                                        class="form-control" 
+                                        placeholder="Ingrese un nombre de categoría">
                                     <small class="msj-error" v-if="msjError.nombre" v-text="msjError.nombre"></small>
                                 </div>
                             </div>
@@ -143,7 +152,9 @@
                     'from' : 0,
                     'to' : 0,
                 },
-                offset: 3
+                offset: 3,
+                textFilter: '',
+                typeFilter: 'nombre'
             }
         },
         computed: {
@@ -174,9 +185,9 @@
             }
         },
         methods: {
-            listarCategorias(page){
+            listarCategorias(page, textFilter='', typeFilter='nombre'){
                 let me = this,
-                    url = "categorias?page="+page
+                    url = "categorias?page="+page+'&textFilter='+textFilter+'&typeFilter='+typeFilter;
                 
                 axios.get(me.path+url)
                 .then(function (response) {
@@ -190,9 +201,9 @@
                     console.log(error);
                 });
             },
-            cambiarPagina(page){
+            cambiarPagina(page, textFilter='', typeFilter='nombre'){
                 this.pagination.current_page  = page;
-                this.listarCategorias(page);
+                this.listarCategorias(page, textFilter, typeFilter);
             },
             validateCategoria(){
                 this.msjError.nombre = null;
