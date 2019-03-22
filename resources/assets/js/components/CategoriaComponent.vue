@@ -132,7 +132,8 @@
     export default {
         data() {
             return {
-                path: '/laravel/mi-sistema/public/',
+                //path: '/laravel/mi-sistema/public/',
+                path: '/',
                 categoriaId : null,
                 nombre: null,
                 descripcion: null,

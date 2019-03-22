@@ -49364,7 +49364,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            path: '/laravel/mi-sistema/public/',
+            //path: '/laravel/mi-sistema/public/',
+            path: '/',
             categoriaId: null,
             nombre: null,
             descripcion: null,
