@@ -45,7 +45,7 @@ class ArticuloController extends Controller
                 'from'          => $articulos->firstItem(),
                 'to'            => $articulos->lastItem()
             ],
-            'categorias' => $articulos
+            'articulos' => $articulos
         ];
     }
 
@@ -66,7 +66,7 @@ class ArticuloController extends Controller
     public function update(Request $request)
     {
         if($this->validateRequest($request)) return redirect('/');
-        $articulo = Articulo::findOrFail($request->id);
+        $articulo = Articulo::findOrFail($request->idarticulo);
         $articulo->idcategoria = $request->idcategoria;
         $articulo->codigo = $request->codigo;
         $articulo->nombre = $request->nombre;
