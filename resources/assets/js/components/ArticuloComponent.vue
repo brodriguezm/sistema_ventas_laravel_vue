@@ -109,7 +109,7 @@
                                            v-model.number="codigo"
                                            class="form-control"
                                            placeholder="Ingrese un codígo de artículo">
-                                    <small class="msj-error" v-if="msjError.nombre" v-text="msjError.nombre"></small>
+                                    <small class="msj-error" v-if="msjError.codigo" v-text="msjError.codigo"></small>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -123,35 +123,34 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-md-3 form-control-label" for="categoria-input">Nombre de categoria</label>
+                                <label class="col-md-3 form-control-label" for="categoria-input">Categoría</label>
                                 <div class="col-md-9">
                                     <select class="form-control" name="categoriaId" id="categoriaId" v-model="categoriaId">
                                         <option value="">--Seleccionar--</option>
-                                        <option v-for="categoria in listaCategorias" :value="categoria.id">{{categoria.nombre}}</option>
+                                        <option v-for="categoria in listaCategorias" :key="categoria.id" :value="categoria.id">{{categoria.nombre}}</option>
                                     </select>
-                                    <!--<input type="text" id="categoriaId" name="categoriaId"
-                                           v-model.number="categoriaId"
-                                           class="form-control"
-                                           placeholder="Ingrese un nombre de categoría">
-                                    <small class="msj-error" v-if="msjError.nombre" v-text="msjError.nombre"></small>-->
+                                    <small class="msj-error" v-if="msjError.categoria" v-text="msjError.categoria"></small>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="precio-input">Precio</label>
                                 <div class="col-md-9">
-                                    <input type="email" id="precio_venta" name="precio_venta" v-model.number="precio_venta" class="form-control" placeholder="Ingrese el precio">
+                                    <input type="number" id="precio_venta" name="precio_venta" v-model.number="precio_venta" class="form-control" placeholder="Ingrese el precio">
+                                    <small class="msj-error" v-if="msjError.precio_venta" v-text="msjError.precio_venta"></small>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="stock-input">Stock</label>
                                 <div class="col-md-9">
-                                    <input type="email" id="stock" name="stock" v-model.number="stock" class="form-control" placeholder="Ingrese el # de stock">
+                                    <input type="number" id="stock" name="stock" v-model.number="stock" class="form-control" placeholder="Ingrese el # de stock">
+                                    <small class="msj-error" v-if="msjError.stock" v-text="msjError.stock"></small>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="email-input">Descripción</label>
                                 <div class="col-md-9">
-                                    <input type="email" id="descripcion" name="descripcion" v-model="descripcion" class="form-control" placeholder="Ingrese una descripción">
+                                    <input type="text" id="descripcion" name="descripcion" v-model="descripcion" class="form-control" placeholder="Ingrese una descripción">
+                                    <small class="msj-error" v-if="msjError.descripcion" v-text="msjError.descripcion"></small>
                                 </div>
                             </div>
                         </form>
@@ -190,8 +189,12 @@
                 typeModal: 0, //1 = create; 2 = update
                 titleModal: null,
                 msjError:{
+                    codigo: null,
                     nombre: null,
-                    descripcion: null
+                    descripcion: null,
+                    categoria: null,
+                    precio_venta: null,
+                    stock: null,
                 },
                 pagination: {
                     'total' : 0,
@@ -269,13 +272,20 @@
                 this.listarArticulos(page, textFilter, typeFilter);
             },
             validateArticulo(){
-                this.msjError.nombre = null;
-                this.msjError.descripcion = null;
+                //this.msjError.nombre = null;
+                //this.msjError.descripcion = null;
+                //this.msjError.forEach( datos => datos = null);
+                for(let dato in this.msjError){ this.msjError[dato] = null;}
+                let flagError = false;
 
-                if(!this.nombre){
-                    this.msjError.nombre = 'El campo nombre no puede ser nulo';
-                    return true;
-                }
+                if(!this.codigo){ this.msjError.codigo = 'Debe ingresar el código del artículo'; flagError = true;}
+                if(!this.nombre){ this.msjError.nombre = 'Debe ingresar el nombre del artículo'; flagError = true;}
+                if(!this.categoriaId){ this.msjError.categoria = 'Debe seleccionar una categoría'; flagError = true;}
+                if(!this.descripcion){ this.msjError.descripcion = 'Debe ingresar una descripción del artículo'; flagError = true;}
+                if(!this.precio_venta || this.precio_venta <= 0){ this.msjError.precio_venta = 'Debe ingresar un precio valido para el artículo'; flagError = true;}
+                if(!this.stock || this.stock <= 0){ this.msjError.stock = 'Debe ingresar un número de stock válido'; flagError = true;}
+
+                return flagError;
             },
             createArticulo(){
                 if(this.validateArticulo())
@@ -367,6 +377,8 @@
                     this.flagModal = 1;
                     this.typeModal = 1;
                     this.titleModal = "Agregar artículo";
+                    this.precio_venta = 0;
+                    this.stock = 0;
                     this.listarCategorias();
                 }
 

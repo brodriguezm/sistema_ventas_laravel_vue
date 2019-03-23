@@ -50358,7 +50358,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -50379,8 +50378,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             typeModal: 0, //1 = create; 2 = update
             titleModal: null,
             msjError: {
+                codigo: null,
                 nombre: null,
-                descripcion: null
+                descripcion: null,
+                categoria: null,
+                precio_venta: null,
+                stock: null
             },
             pagination: {
                 'total': 0,
@@ -50460,13 +50463,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.listarArticulos(page, textFilter, typeFilter);
         },
         validateArticulo: function validateArticulo() {
-            this.msjError.nombre = null;
-            this.msjError.descripcion = null;
-
-            if (!this.nombre) {
-                this.msjError.nombre = 'El campo nombre no puede ser nulo';
-                return true;
+            //this.msjError.nombre = null;
+            //this.msjError.descripcion = null;
+            //this.msjError.forEach( datos => datos = null);
+            for (var dato in this.msjError) {
+                this.msjError[dato] = null;
             }
+            var flagError = false;
+
+            if (!this.codigo) {
+                this.msjError.codigo = 'Debe ingresar el código del artículo';flagError = true;
+            }
+            if (!this.nombre) {
+                this.msjError.nombre = 'Debe ingresar el nombre del artículo';flagError = true;
+            }
+            if (!this.categoriaId) {
+                this.msjError.categoria = 'Debe seleccionar una categoría';flagError = true;
+            }
+            if (!this.descripcion) {
+                this.msjError.descripcion = 'Debe ingresar una descripción del artículo';flagError = true;
+            }
+            if (!this.precio_venta || this.precio_venta <= 0) {
+                this.msjError.precio_venta = 'Debe ingresar un precio valido para el artículo';flagError = true;
+            }
+            if (!this.stock || this.stock <= 0) {
+                this.msjError.stock = 'Debe ingresar un número de stock válido';flagError = true;
+            }
+
+            return flagError;
         },
         createArticulo: function createArticulo() {
             if (this.validateArticulo()) return;
@@ -50547,6 +50571,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.flagModal = 1;
                 this.typeModal = 1;
                 this.titleModal = "Agregar artículo";
+                this.precio_venta = 0;
+                this.stock = 0;
                 this.listarCategorias();
             }
 
@@ -51002,11 +51028,11 @@ var render = function() {
                           }
                         }),
                         _vm._v(" "),
-                        _vm.msjError.nombre
+                        _vm.msjError.codigo
                           ? _c("small", {
                               staticClass: "msj-error",
                               domProps: {
-                                textContent: _vm._s(_vm.msjError.nombre)
+                                textContent: _vm._s(_vm.msjError.codigo)
                               }
                             })
                           : _vm._e()
@@ -51069,7 +51095,7 @@ var render = function() {
                           staticClass: "col-md-3 form-control-label",
                           attrs: { for: "categoria-input" }
                         },
-                        [_vm._v("Nombre de categoria")]
+                        [_vm._v("Categoría")]
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-9" }, [
@@ -51110,13 +51136,25 @@ var render = function() {
                             _vm._l(_vm.listaCategorias, function(categoria) {
                               return _c(
                                 "option",
-                                { domProps: { value: categoria.id } },
+                                {
+                                  key: categoria.id,
+                                  domProps: { value: categoria.id }
+                                },
                                 [_vm._v(_vm._s(categoria.nombre))]
                               )
                             })
                           ],
                           2
-                        )
+                        ),
+                        _vm._v(" "),
+                        _vm.msjError.categoria
+                          ? _c("small", {
+                              staticClass: "msj-error",
+                              domProps: {
+                                textContent: _vm._s(_vm.msjError.categoria)
+                              }
+                            })
+                          : _vm._e()
                       ])
                     ]),
                     _vm._v(" "),
@@ -51143,7 +51181,7 @@ var render = function() {
                           ],
                           staticClass: "form-control",
                           attrs: {
-                            type: "email",
+                            type: "number",
                             id: "precio_venta",
                             name: "precio_venta",
                             placeholder: "Ingrese el precio"
@@ -51160,7 +51198,16 @@ var render = function() {
                               return _vm.$forceUpdate()
                             }
                           }
-                        })
+                        }),
+                        _vm._v(" "),
+                        _vm.msjError.precio_venta
+                          ? _c("small", {
+                              staticClass: "msj-error",
+                              domProps: {
+                                textContent: _vm._s(_vm.msjError.precio_venta)
+                              }
+                            })
+                          : _vm._e()
                       ])
                     ]),
                     _vm._v(" "),
@@ -51187,7 +51234,7 @@ var render = function() {
                           ],
                           staticClass: "form-control",
                           attrs: {
-                            type: "email",
+                            type: "number",
                             id: "stock",
                             name: "stock",
                             placeholder: "Ingrese el # de stock"
@@ -51204,7 +51251,16 @@ var render = function() {
                               return _vm.$forceUpdate()
                             }
                           }
-                        })
+                        }),
+                        _vm._v(" "),
+                        _vm.msjError.stock
+                          ? _c("small", {
+                              staticClass: "msj-error",
+                              domProps: {
+                                textContent: _vm._s(_vm.msjError.stock)
+                              }
+                            })
+                          : _vm._e()
                       ])
                     ]),
                     _vm._v(" "),
@@ -51230,7 +51286,7 @@ var render = function() {
                           ],
                           staticClass: "form-control",
                           attrs: {
-                            type: "email",
+                            type: "text",
                             id: "descripcion",
                             name: "descripcion",
                             placeholder: "Ingrese una descripción"
@@ -51244,7 +51300,16 @@ var render = function() {
                               _vm.descripcion = $event.target.value
                             }
                           }
-                        })
+                        }),
+                        _vm._v(" "),
+                        _vm.msjError.descripcion
+                          ? _c("small", {
+                              staticClass: "msj-error",
+                              domProps: {
+                                textContent: _vm._s(_vm.msjError.descripcion)
+                              }
+                            })
+                          : _vm._e()
                       ])
                     ])
                   ]
