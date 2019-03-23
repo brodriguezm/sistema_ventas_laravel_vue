@@ -50,7 +50,7 @@
                                     <button type="button" v-if="categoria.condicion" @click="changeState(categoria)" class="btn btn-danger btn-sm" >
                                         <i class="fa fa-trash"></i>
                                     </button>
-                                    <button type="button" v-else @click="changeState(categoria)" class="btn btn-danger btn-sm" >
+                                    <button type="button" v-else @click="changeState(categoria)" class="btn btn-success btn-sm" >
                                         <i class="fa fa-check"></i>
                                     </button>
                                 </td>

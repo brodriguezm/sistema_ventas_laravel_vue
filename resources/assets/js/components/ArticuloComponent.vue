@@ -54,7 +54,7 @@
                                 <button type="button" v-if="articulo.condicion" @click="changeState(articulo)" class="btn btn-danger btn-sm" >
                                     <i class="fa fa-trash"></i>
                                 </button>
-                                <button type="button" v-else @click="changeState(articulo)" class="btn btn-danger btn-sm" >
+                                <button type="button" v-else @click="changeState(articulo)" class="btn btn-success btn-sm" >
                                     <i class="fa fa-check"></i>
                                 </button>
                             </td>
@@ -105,11 +105,14 @@
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="codigo-input">Codígo</label>
                                 <div class="col-md-9">
-                                    <input type="text" id="codigo" name="codigo"
+                                    <input type="number" id="codigo" name="codigo"
                                            v-model.number="codigo"
                                            class="form-control"
                                            placeholder="Ingrese un codígo de artículo">
                                     <small class="msj-error" v-if="msjError.codigo" v-text="msjError.codigo"></small>
+                                    <div v-if="codigo" class="barcode">
+                                        <vue-barcode :value="codigo" width="2" height="40" ></vue-barcode>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -170,6 +173,7 @@
 </template>
 
 <script>
+    import VueBarcode from 'vue-barcode';
     export default {
         data() {
             return {
@@ -208,6 +212,9 @@
                 textFilter: '',
                 typeFilter: 'nombre'
             }
+        },
+        components: {
+            'vue-barcode': VueBarcode
         },
         computed: {
             isActivated: function(){
@@ -272,16 +279,13 @@
                 this.listarArticulos(page, textFilter, typeFilter);
             },
             validateArticulo(){
-                //this.msjError.nombre = null;
-                //this.msjError.descripcion = null;
-                //this.msjError.forEach( datos => datos = null);
                 for(let dato in this.msjError){ this.msjError[dato] = null;}
                 let flagError = false;
 
                 if(!this.codigo){ this.msjError.codigo = 'Debe ingresar el código del artículo'; flagError = true;}
                 if(!this.nombre){ this.msjError.nombre = 'Debe ingresar el nombre del artículo'; flagError = true;}
                 if(!this.categoriaId){ this.msjError.categoria = 'Debe seleccionar una categoría'; flagError = true;}
-                if(!this.descripcion){ this.msjError.descripcion = 'Debe ingresar una descripción del artículo'; flagError = true;}
+                //if(!this.descripcion){ this.msjError.descripcion = 'Debe ingresar una descripción del artículo'; flagError = true;}
                 if(!this.precio_venta || this.precio_venta <= 0){ this.msjError.precio_venta = 'Debe ingresar un precio valido para el artículo'; flagError = true;}
                 if(!this.stock || this.stock <= 0){ this.msjError.stock = 'Debe ingresar un número de stock válido'; flagError = true;}
 
@@ -405,6 +409,8 @@
                 this.precio_venta = null;
                 this.stock = null;
                 this.descripcion = null;
+                //Se setean nuevamente los mensajes de error
+                for(let dato in this.msjError){ this.msjError[dato] = null;}
             }
         },
         mounted() {
@@ -428,6 +434,10 @@
     .msj-error{
         color:red;
         font-weight: bold;
+    }
+
+    .barcode{
+        text-align: center;
     }
 </style>
 
