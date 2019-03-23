@@ -43,6 +43,17 @@ class CategoriaController extends Controller
         ];
     }
 
+    public function selectCategorias(Request $request){
+        if($this->validateRequest($request)) return redirect('/');
+
+        $categorias = Categoria::where('condicion', '=', '1')
+            ->select('id', 'nombre')
+            ->orderBy('id', 'asc')
+            ->get();
+
+        return [ 'categorias' => $categorias];
+    }
+
     public function store(Request $request)
     {
         if($this->validateRequest($request)) return redirect('/');

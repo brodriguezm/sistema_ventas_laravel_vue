@@ -125,11 +125,15 @@
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="categoria-input">Nombre de categoria</label>
                                 <div class="col-md-9">
-                                    <input type="text" id="categoriaId" name="categoriaId"
+                                    <select class="form-control" name="categoriaId" id="categoriaId" v-model="categoriaId">
+                                        <option value="">--Seleccionar--</option>
+                                        <option v-for="categoria in listaCategorias" :value="categoria.id">{{categoria.nombre}}</option>
+                                    </select>
+                                    <!--<input type="text" id="categoriaId" name="categoriaId"
                                            v-model.number="categoriaId"
                                            class="form-control"
                                            placeholder="Ingrese un nombre de categoría">
-                                    <small class="msj-error" v-if="msjError.nombre" v-text="msjError.nombre"></small>
+                                    <small class="msj-error" v-if="msjError.nombre" v-text="msjError.nombre"></small>-->
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -173,7 +177,7 @@
                 //path: '/laravel/mi-sistema/public/',
                 path: '/',
                 articuloId: null,
-                categoriaId : null,
+                categoriaId : "",
                 nombre_categoria: null,
                 codigo: null,
                 nombre: null,
@@ -181,6 +185,7 @@
                 stock: null,
                 descripcion: null,
                 listaArticulos: [],
+                listaCategorias: [],
                 flagModal: 0,
                 typeModal: 0, //1 = create; 2 = update
                 titleModal: null,
@@ -245,6 +250,20 @@
                         console.log(error);
                     });
             },
+            listarCategorias(){
+                let me = this,
+                    url = "categorias/selectCategorias";
+
+                axios.get(me.path+url)
+                    .then(function (response) {
+                        console.log(response);
+                        var resp = response.data;
+                        me.listaCategorias = resp.categorias;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            },
             cambiarPagina(page, textFilter='', typeFilter='nombre'){
                 this.pagination.current_page  = page;
                 this.listarArticulos(page, textFilter, typeFilter);
@@ -254,7 +273,7 @@
                 this.msjError.descripcion = null;
 
                 if(!this.nombre){
-                    this.msjError.nombre = 'El campo nombre no puede ser nulo'
+                    this.msjError.nombre = 'El campo nombre no puede ser nulo';
                     return true;
                 }
             },
@@ -348,6 +367,7 @@
                     this.flagModal = 1;
                     this.typeModal = 1;
                     this.titleModal = "Agregar artículo";
+                    this.listarCategorias();
                 }
 
                 if(action === "update"){
@@ -361,12 +381,13 @@
                     this.precio_venta = data.precio_venta;
                     this.stock = data.stock;
                     this.descripcion = data.descripcion;
+                    this.listarCategorias();
                 }
             },
             hiddeModal(){
                 this.flagModal = 0;
                 this.typeModal = 1;
-                this.categoriaId = null;
+                this.categoriaId = "";
                 this.codigo = null;
                 this.nombre = null;
                 this.precio_venta = null;

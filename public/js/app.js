@@ -50355,6 +50355,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -50362,7 +50366,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             //path: '/laravel/mi-sistema/public/',
             path: '/',
             articuloId: null,
-            categoriaId: null,
+            categoriaId: "",
             nombre_categoria: null,
             codigo: null,
             nombre: null,
@@ -50370,6 +50374,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             stock: null,
             descripcion: null,
             listaArticulos: [],
+            listaCategorias: [],
             flagModal: 0,
             typeModal: 0, //1 = create; 2 = update
             titleModal: null,
@@ -50431,6 +50436,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 //console.log('***response***');
                 //console.log(resp.pagination);
                 me.pagination = resp.pagination;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        listarCategorias: function listarCategorias() {
+            var me = this,
+                url = "categorias/selectCategorias";
+
+            axios.get(me.path + url).then(function (response) {
+                console.log(response);
+                var resp = response.data;
+                me.listaCategorias = resp.categorias;
             }).catch(function (error) {
                 console.log(error);
             });
@@ -50530,6 +50547,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.flagModal = 1;
                 this.typeModal = 1;
                 this.titleModal = "Agregar artículo";
+                this.listarCategorias();
             }
 
             if (action === "update") {
@@ -50543,12 +50561,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.precio_venta = data.precio_venta;
                 this.stock = data.stock;
                 this.descripcion = data.descripcion;
+                this.listarCategorias();
             }
         },
         hiddeModal: function hiddeModal() {
             this.flagModal = 0;
             this.typeModal = 1;
-            this.categoriaId = null;
+            this.categoriaId = "";
             this.codigo = null;
             this.nombre = null;
             this.precio_venta = null;
@@ -51054,45 +51073,50 @@ var render = function() {
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-9" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model.number",
-                              value: _vm.categoriaId,
-                              expression: "categoriaId",
-                              modifiers: { number: true }
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.categoriaId,
+                                expression: "categoriaId"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { name: "categoriaId", id: "categoriaId" },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.categoriaId = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
                             }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            id: "categoriaId",
-                            name: "categoriaId",
-                            placeholder: "Ingrese un nombre de categoría"
                           },
-                          domProps: { value: _vm.categoriaId },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.categoriaId = _vm._n($event.target.value)
-                            },
-                            blur: function($event) {
-                              return _vm.$forceUpdate()
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _vm.msjError.nombre
-                          ? _c("small", {
-                              staticClass: "msj-error",
-                              domProps: {
-                                textContent: _vm._s(_vm.msjError.nombre)
-                              }
+                          [
+                            _c("option", { attrs: { value: "" } }, [
+                              _vm._v("--Seleccionar--")
+                            ]),
+                            _vm._v(" "),
+                            _vm._l(_vm.listaCategorias, function(categoria) {
+                              return _c(
+                                "option",
+                                { domProps: { value: categoria.id } },
+                                [_vm._v(_vm._s(categoria.nombre))]
+                              )
                             })
-                          : _vm._e()
+                          ],
+                          2
+                        )
                       ])
                     ]),
                     _vm._v(" "),
