@@ -57372,7 +57372,7 @@ var render = function() {
                               _vm._v("DNI")
                             ]),
                             _vm._v(" "),
-                            _c("option", { attrs: { value: "DNI" } }, [
+                            _c("option", { attrs: { value: "RUC" } }, [
                               _vm._v("RUC")
                             ])
                           ]

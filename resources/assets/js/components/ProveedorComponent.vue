@@ -130,7 +130,7 @@
                                     <select class="form-control" name="tipo_documento" id="tipo_documento" v-model="tipo_documento">
                                         <option value="">--Seleccione--</option>
                                         <option value="DNI">DNI</option>
-                                        <option value="DNI">RUC</option>
+                                        <option value="RUC">RUC</option>
                                     </select>
                                     <!--<input type="text" id="tipo_documento" name="tipo_documento"
                                            v-model="tipo_documento"
