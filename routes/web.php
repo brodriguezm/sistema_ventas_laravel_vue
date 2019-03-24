@@ -34,3 +34,8 @@ Route::put('/articulo/desactivar', 'ArticuloController@desactivate');
 Route::get('/clientes', 'ClienteController@index');
 Route::post('/cliente/registrar', 'ClienteController@store');
 Route::put('/cliente/actualizar', 'ClienteController@update');
+
+/*Proveedor*/
+Route::get('/proveedores', 'ProveedorController@index');
+Route::post('/proveedor/registrar', 'ProveedorController@store');
+Route::put('/proveedor/actualizar', 'ProveedorController@update');
