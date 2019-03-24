@@ -19,7 +19,8 @@
                             <div class="input-group">
                                 <select class="form-control col-md-3" id="opcion" name="opcion" v-model="typeFilter">
                                     <option value="nombre">Nombre</option>
-                                    <option value="descripcion">Descripción</option>
+                                    <option value="num_documento">Num. Documento</option>
+                                    <option value="email">Email</option>
                                 </select>
                                 <input type="text"
                                        id="texto"
@@ -122,10 +123,15 @@
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input">Tipo documento</label>
                                 <div class="col-md-9">
-                                    <input type="text" id="tipo_documento" name="tipo_documento"
+                                    <select name="tipo_documento" id="tipo_documento" v-model="tipo_documento">
+                                        <option value="">--Seleccione--</option>
+                                        <option value="DNI">DNI</option>
+                                        <option value="DNI">RUC</option>
+                                    </select>
+                                    <!--<input type="text" id="tipo_documento" name="tipo_documento"
                                            v-model="tipo_documento"
                                            class="form-control"
-                                           placeholder="Tipo documento">
+                                           placeholder="Tipo documento">-->
                                     <small class="msj-error" v-if="msjError.tipo_documento" v-text="msjError.tipo_documento"></small>
                                 </div>
                             </div>
@@ -155,7 +161,7 @@
                                     <input type="number" id="telefono" name="telefono"
                                            v-model.number="telefono"
                                            class="form-control"
-                                           placeholder="Id documento">
+                                           placeholder="Teléfono cliente">
                                     <small class="msj-error" v-if="msjError.telefono" v-text="msjError.telefono"></small>
                                 </div>
                             </div>
@@ -271,6 +277,8 @@
                 for(let dato in this.msjError){ this.msjError[dato] = null;}
                 let flagError = false;
                 if(!this.nombre){ this.msjError.nombre = 'Debe ingresar el nombre'; flagError = true;}
+                if(!this.tipo_documento){ this.msjError.tipo_documento = 'Debe seleccionar el tipo de documento'; flagError = true;}
+                if(!this.num_documento){ this.msjError.num_documento = 'Debe ingresar un número de documento'; flagError = true;}
                 return flagError;
             },
             createModelo(){
@@ -383,7 +391,7 @@
                 this.typeModal = 1;
                 this.clienteId = null;
                 this.nombre = null;
-                this.tipo_documento = null;
+                this.tipo_documento = 'DNI';
                 this.num_documento = null;
                 this.direccion = null;
                 this.telefono = null;

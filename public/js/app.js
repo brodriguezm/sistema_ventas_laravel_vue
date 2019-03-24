@@ -55399,6 +55399,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -55496,6 +55502,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var flagError = false;
             if (!this.nombre) {
                 this.msjError.nombre = 'Debe ingresar el nombre';flagError = true;
+            }
+            if (!this.tipo_documento) {
+                this.msjError.tipo_documento = 'Debe seleccionar el tipo de documento';flagError = true;
+            }
+            if (!this.num_documento) {
+                this.msjError.num_documento = 'Debe ingresar un número de documento';flagError = true;
             }
             return flagError;
         },
@@ -55598,7 +55610,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.typeModal = 1;
             this.clienteId = null;
             this.nombre = null;
-            this.tipo_documento = null;
+            this.tipo_documento = 'DNI';
             this.num_documento = null;
             this.direccion = null;
             this.telefono = null;
@@ -55683,8 +55695,12 @@ var render = function() {
                       _vm._v("Nombre")
                     ]),
                     _vm._v(" "),
-                    _c("option", { attrs: { value: "descripcion" } }, [
-                      _vm._v("Descripción")
+                    _c("option", { attrs: { value: "num_documento" } }, [
+                      _vm._v("Num. Documento")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "email" } }, [
+                      _vm._v("Email")
                     ])
                   ]
                 ),
@@ -56012,32 +56028,51 @@ var render = function() {
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-9" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.tipo_documento,
-                              expression: "tipo_documento"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            id: "tipo_documento",
-                            name: "tipo_documento",
-                            placeholder: "Tipo documento"
-                          },
-                          domProps: { value: _vm.tipo_documento },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.tipo_documento,
+                                expression: "tipo_documento"
                               }
-                              _vm.tipo_documento = $event.target.value
+                            ],
+                            attrs: {
+                              name: "tipo_documento",
+                              id: "tipo_documento"
+                            },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.tipo_documento = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
                             }
-                          }
-                        }),
+                          },
+                          [
+                            _c("option", { attrs: { value: "" } }, [
+                              _vm._v("--Seleccione--")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "DNI" } }, [
+                              _vm._v("DNI")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "DNI" } }, [
+                              _vm._v("RUC")
+                            ])
+                          ]
+                        ),
                         _vm._v(" "),
                         _vm.msjError.tipo_documento
                           ? _c("small", {
@@ -56174,7 +56209,7 @@ var render = function() {
                             type: "number",
                             id: "telefono",
                             name: "telefono",
-                            placeholder: "Id documento"
+                            placeholder: "Teléfono cliente"
                           },
                           domProps: { value: _vm.telefono },
                           on: {
