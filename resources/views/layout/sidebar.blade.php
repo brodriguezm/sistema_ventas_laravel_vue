@@ -22,7 +22,7 @@
                 <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-wallet"></i> Compras</a>
                 <ul class="nav-dropdown-items">
                     <li @click="IdMenu=3" class="nav-item">
-                        <a class="nav-link" href="3#"><i class="icon-wallet"></i> Ingresos</a>
+                        <a class="nav-link" href="#"><i class="icon-wallet"></i> Ingresos</a>
                     </li>
                     <li @click="IdMenu=4" class="nav-item">
                         <a class="nav-link" href="#"><i class="icon-notebook"></i> Proveedores</a>

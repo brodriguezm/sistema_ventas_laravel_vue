@@ -13,13 +13,8 @@ class ArticuloController extends Controller
 
     public function index(Request $request)
     {
-        //if($this->validateRequest($request)) return redirect('/');
-        //$categorias = Categoria::all();
-        //return $categorias;
-        
-        //Paginacion con Query Builder
-        //$categorias = DB::table('categorias')->paginate(2);
-        //Paginacion con Eloquent
+        if($this->validateRequest($request)) return redirect('/');
+
         $textFilter = $request->textFilter;
         $typeFilter = $request->typeFilter;
 

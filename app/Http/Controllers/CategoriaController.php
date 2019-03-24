@@ -14,7 +14,7 @@ class CategoriaController extends Controller
 
     public function index(Request $request)
     {
-        //if($this->validateRequest($request)) return redirect('/');
+        if($this->validateRequest($request)) return redirect('/');
         //$categorias = Categoria::all();
         //return $categorias;
         

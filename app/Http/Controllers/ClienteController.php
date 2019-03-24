@@ -7,8 +7,14 @@ use Illuminate\Http\Request;
 
 class ClienteController extends Controller
 {
+    public function validateRequest($request){
+        if(!$request->ajax()) return true;
+    }
+
     public function index(Request $request)
     {
+        //if($this->validateRequest($request)) return redirect('/');
+
         $textFilter = $request->textFilter;
         $typeFilter = $request->typeFilter;
 
@@ -27,7 +33,7 @@ class ClienteController extends Controller
                 'from'          => $personas->firstItem(),
                 'to'            => $personas->lastItem()
             ],
-            'categorias' => $personas
+            'clientes' => $personas
         ];
     }
 
