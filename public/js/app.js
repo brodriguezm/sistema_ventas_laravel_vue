@@ -56039,6 +56039,7 @@ var render = function() {
                                 expression: "tipo_documento"
                               }
                             ],
+                            staticClass: "form-control",
                             attrs: {
                               name: "tipo_documento",
                               id: "tipo_documento"

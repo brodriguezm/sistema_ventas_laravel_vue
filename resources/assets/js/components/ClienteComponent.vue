@@ -123,7 +123,7 @@
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input">Tipo documento</label>
                                 <div class="col-md-9">
-                                    <select name="tipo_documento" id="tipo_documento" v-model="tipo_documento">
+                                    <select class="form-control" name="tipo_documento" id="tipo_documento" v-model="tipo_documento">
                                         <option value="">--Seleccione--</option>
                                         <option value="DNI">DNI</option>
                                         <option value="DNI">RUC</option>
