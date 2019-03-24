@@ -50,6 +50,7 @@
                             <th>Teléfono</th>
                             <th>Email</th>
                             <th>Contacto</th>
+                            <th>Teléfono Contacto</th>
                         </tr>
                         <tr v-for="cliente in listModel" :key="cliente.id">
                             <td>
@@ -64,6 +65,7 @@
                             <td v-text="cliente.telefono"></td>
                             <td v-text="cliente.email"></td>
                             <td v-text="cliente.contacto"></td>
+                            <td v-text="cliente.telefono_contacto"></td>
                             <!--<td>
                                 <button type="button" v-if="categoria.condicion" @click="changeState(categoria)" class="btn btn-danger btn-sm" >
                                     <i class="fa fa-trash"></i>
@@ -173,6 +175,26 @@
                                     <input type="email" id="email" name="email" v-model="email" class="form-control" placeholder="Email cliente">
                                 </div>
                             </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="text-input">Dirección</label>
+                                <div class="col-md-9">
+                                    <input type="text" id="contacto" name="contacto"
+                                           v-model="contacto"
+                                           class="form-control"
+                                           placeholder="Contacto">
+                                    <small class="msj-error" v-if="msjError.contacto" v-text="msjError.contacto"></small>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="text-input">Dirección</label>
+                                <div class="col-md-9">
+                                    <input type="text" id="telefono_contacto" name="telefono_contacto"
+                                           v-model="telefono_contacto"
+                                           class="form-control"
+                                           placeholder="Teléfono contacto">
+                                    <small class="msj-error" v-if="msjError.telefono_contacto" v-text="msjError.telefono_contacto"></small>
+                                </div>
+                            </div>
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -215,6 +237,8 @@
                     direccion: null,
                     telefono: null,
                     email: null,
+                    contacto: null,
+                    telefono_contacto: null,
                 },
                 pagination: {
                     'total' : 0,
@@ -296,7 +320,9 @@
                     'num_documento': this.num_documento,
                     'direccion': this.direccion,
                     'telefono': this.telefono,
-                    'email': this.email
+                    'email': this.email,
+                    'contacto': this.contacto,
+                    'telefono_contacto': this.telefono_contacto,
                 };
                 axios.post(me.path+'/registrar', data)
                     .then(reponse => {
@@ -319,7 +345,9 @@
                     'num_documento': this.num_documento,
                     'direccion': this.direccion,
                     'telefono': this.telefono,
-                    'email': this.email
+                    'email': this.email,
+                    'contacto': this.contacto,
+                    'telefono_contacto': this.telefono_contacto,
                 };
                 axios.put(me.path+'/actualizar', data)
                     .then(reponse => {
@@ -388,6 +416,8 @@
                     this.direccion = data.direccion;
                     this.telefono = data.telefono;
                     this.email = data.email;
+                    this.contacto = data.contacto;
+                    this.telefono_contacto = data.telefono_contacto;
                 }
             },
             hiddeModal(){
@@ -400,6 +430,8 @@
                 this.direccion = null;
                 this.telefono = null;
                 this.email = null;
+                this.contacto = null;
+                this.telefono_contacto = null;
             }
         },
         mounted() {
