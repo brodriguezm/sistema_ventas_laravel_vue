@@ -10,4 +10,8 @@ class Rol extends Model
     protected  $fillable = ['nombre', 'descripcion', 'condicion'];
     public $timestamps = false;
 
+    public function users(){
+        return $this->hasMany('App\User');
+    }
+
 }
