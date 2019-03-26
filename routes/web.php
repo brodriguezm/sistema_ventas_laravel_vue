@@ -44,3 +44,10 @@ Route::put('/proveedor/actualizar', 'ProveedorController@update');
 Route::get('/roles', 'RolController@index');
 //Route::post('/proveedor/registrar', 'ProveedorController@store');
 //Route::put('/proveedor/actualizar', 'ProveedorController@update');
+
+/*Users*/
+Route::get('/users', 'UserController@index');
+Route::post('/user/registrar', 'UserController@store');
+Route::put('/user/actualizar', 'UserController@update');
+Route::put('/user/activar', 'UserController@activate');
+Route::put('/user/desactivar', 'UserController@desactivate');
