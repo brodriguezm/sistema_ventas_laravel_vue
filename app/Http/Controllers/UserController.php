@@ -22,7 +22,7 @@ class UserController extends Controller
 
         if($textFilter != ''){
             $personas = User::join('personas','users.id', '=', 'personas.id')
-                ->join('roles', 'users.id_rol', '=', 'personas.id')
+                ->join('roles', 'users.id_rol', '=', 'roles.id')
                 ->select('personas.id', 'personas.nombre', 'personas.tipo_documento',
                     'personas.num_documento', 'personas.direccion', 'personas.telefono',
                     'personas.email', 'users.username', 'users.password',
@@ -32,7 +32,7 @@ class UserController extends Controller
                 ->paginate(2);
         }else{
             $personas = User::join('personas','users.id', '=', 'personas.id')
-                ->join('roles', 'users.id_rol', '=', 'personas.id')
+                ->join('roles', 'users.id_rol', '=', 'roles.id')
                 ->select('personas.id', 'personas.nombre', 'personas.tipo_documento',
                     'personas.num_documento', 'personas.direccion', 'personas.telefono',
                     'personas.email', 'users.username', 'users.password',
@@ -70,8 +70,9 @@ class UserController extends Controller
             $persona->save();
 
             $user = new User();
+            //Se setea el mismo id que se genera en la clase persona
             $user->id = $persona->id;
-            $user->usuario = $persona->usuario;
+            $user->usuario = $request->usuario;
             $user->password = bcrypt($request->password);
             $user->condicion = '1';
             $user->id_rol = $request->id_rol;
@@ -90,9 +91,8 @@ class UserController extends Controller
         try{
             DB::beginTransaction();
 
-            //Buscamos el proveedor a actualizar
-            $persona = Persona  ::findOrFail($request->id);
-            $user= User::findOrFail($persona->id);
+            $user= User::findOrFail($request->id);
+            $persona = Persona::findOrFail($user->id);
 
             $persona->nombre = $request->nombre;
             $persona->tipo_documento = $request->tipo_documento;
@@ -102,9 +102,9 @@ class UserController extends Controller
             $persona->email = $request->email;
             $persona->save();
 
-            $user->username = $request->contacto;
-            $user->password = bcrypt($request->telefono_contacto) ;
-            $user->condicion = (1);
+            $user->username = $request->username;
+            $user->password = bcrypt($request->password) ;
+            $user->condicion = 1;
             $user->id_rol = $request->id_rol;
             $user->save();
 
@@ -126,7 +126,7 @@ class UserController extends Controller
     public function desactivate(Request $request)
     {
         if($this->validateRequest($request)) return redirect('/');
-        $user = Categoria::findOrFail($request->id);
+        $user = User::findOrFail($request->id);
         $user->condicion = '0';
         $user->save();
     }
