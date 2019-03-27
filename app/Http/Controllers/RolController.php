@@ -13,7 +13,7 @@ class RolController extends Controller
 
     public function index(Request $request)
     {
-        //if($this->validateRequest($request)) return redirect('/');
+        if($this->validateRequest($request)) return redirect('/');
         $textFilter = $request->textFilter;
         $typeFilter = $request->typeFilter;
 
@@ -34,5 +34,16 @@ class RolController extends Controller
             ],
             'roles' => $roles
         ];
+    }
+
+    public function selectRoles(Request $request){
+        cif($this->validateRequest($request)) return redirect('/');
+
+        $roles = Rol::where('condicion', '=', '1')
+            ->select('id', 'nombre')
+            ->orderBy('nombre', 'asc')
+            ->get();
+
+        return ['roles' => $roles];
     }
 }

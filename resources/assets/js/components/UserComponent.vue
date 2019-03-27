@@ -45,11 +45,18 @@
                             <th>Email</th>
                             <th>Usuario</th>
                             <th>Rol</th>
+                            <th>Estado</th>
                         </tr>
                         <tr v-for="user in listModel" :key="user.id">
                             <td>
                                 <button type="button" class="btn btn-warning btn-sm" @click="showModal('update',user)">
                                     <i class="icon-pencil"></i>
+                                </button>
+                                <button type="button" v-if="user.condicion" @click="changeState(user)" class="btn btn-danger btn-sm" >
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                                <button type="button" v-else @click="changeState(user)" class="btn btn-success btn-sm" >
+                                    <i class="fa fa-check"></i>
                                 </button>
                             </td>
                             <td v-text="user.nombre"></td>
@@ -60,14 +67,6 @@
                             <td v-text="user.email"></td>
                             <td v-text="user.username"></td>
                             <td v-text="user.rol"></td>
-                            <td>
-                                <button type="button" v-if="user.condicion" @click="changeState(user)" class="btn btn-danger btn-sm" >
-                                    <i class="fa fa-trash"></i>
-                                </button>
-                                <button type="button" v-else @click="changeState(user)" class="btn btn-success btn-sm" >
-                                    <i class="fa fa-check"></i>
-                                </button>
-                            </td>
                             <td>
                                 <span v-if="user.condicion" class="badge badge-success">Activo</span>
                                 <span v-else class="badge badge-secondary">Inactivo</span>
@@ -166,7 +165,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-md-3 form-control-label" for="text-input">Dirección</label>
+                                <label class="col-md-3 form-control-label" for="text-input">Username</label>
                                 <div class="col-md-9">
                                     <input type="text" id="contacto" name="contacto"
                                            v-model="username"

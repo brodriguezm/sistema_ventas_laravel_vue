@@ -58616,7 +58616,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -59017,7 +59016,35 @@ var render = function() {
                             }
                           },
                           [_c("i", { staticClass: "icon-pencil" })]
-                        )
+                        ),
+                        _vm._v(" "),
+                        user.condicion
+                          ? _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-danger btn-sm",
+                                attrs: { type: "button" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.changeState(user)
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "fa fa-trash" })]
+                            )
+                          : _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-success btn-sm",
+                                attrs: { type: "button" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.changeState(user)
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "fa fa-check" })]
+                            )
                       ]),
                       _vm._v(" "),
                       _c("td", {
@@ -59049,36 +59076,6 @@ var render = function() {
                       }),
                       _vm._v(" "),
                       _c("td", { domProps: { textContent: _vm._s(user.rol) } }),
-                      _vm._v(" "),
-                      _c("td", [
-                        user.condicion
-                          ? _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-danger btn-sm",
-                                attrs: { type: "button" },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.changeState(user)
-                                  }
-                                }
-                              },
-                              [_c("i", { staticClass: "fa fa-trash" })]
-                            )
-                          : _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-success btn-sm",
-                                attrs: { type: "button" },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.changeState(user)
-                                  }
-                                }
-                              },
-                              [_c("i", { staticClass: "fa fa-check" })]
-                            )
-                      ]),
                       _vm._v(" "),
                       _c("td", [
                         user.condicion
@@ -59557,7 +59554,7 @@ var render = function() {
                           staticClass: "col-md-3 form-control-label",
                           attrs: { for: "text-input" }
                         },
-                        [_vm._v("Dirección")]
+                        [_vm._v("Username")]
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-9" }, [
@@ -59688,7 +59685,9 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("th", [_vm._v("Usuario")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Rol")])
+      _c("th", [_vm._v("Rol")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Estado")])
     ])
   }
 ]
