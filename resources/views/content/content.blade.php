@@ -13,6 +13,8 @@
 
     <cliente v-if="IdMenu==6"></cliente>
 
+    <user v-if="IdMenu==7"></user>
+
     <rol v-if="IdMenu==8"></rol>
 
     <h1 v-if="IdMenu==12"> Saludos desde menu 12</h1>

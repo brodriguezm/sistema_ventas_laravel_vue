@@ -50,7 +50,7 @@ class UserController extends Controller
                 'from'          => $personas->firstItem(),
                 'to'            => $personas->lastItem()
             ],
-            'personas' => $personas
+            'users' => $personas
         ];
     }
 
