@@ -400,33 +400,6 @@ exports.default = Barcode;
 /* 2 */
 /***/ (function(module, exports) {
 
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports) {
-
 /*
 	MIT License http://www.opensource.org/licenses/mit-license.php
 	Author Tobias Koppers @sokra
@@ -506,7 +479,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -734,7 +707,7 @@ function applyToTag (styleElement, obj) {
 
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports) {
 
 /* globals __VUE_SSR_CONTEXT__ */
@@ -840,6 +813,33 @@ module.exports = function normalizeComponent (
     options: options
   }
 }
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
 
 
 /***/ }),
@@ -3968,7 +3968,7 @@ Popper.Defaults = Defaults;
 /* harmony default export */ __webpack_exports__["default"] = (Popper);
 //# sourceMappingURL=popper.js.map
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(5)))
 
 /***/ }),
 /* 15 */
@@ -22229,7 +22229,7 @@ if (token) {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(32)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(32)(module)))
 
 /***/ }),
 /* 32 */
@@ -49882,7 +49882,7 @@ Vue.compile = compileToFunctions;
 
 module.exports = Vue;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(56).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(56).setImmediate))
 
 /***/ }),
 /* 56 */
@@ -49952,7 +49952,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
 /* 57 */
@@ -50145,7 +50145,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(16)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(16)))
 
 /***/ }),
 /* 58 */
@@ -50156,7 +50156,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(59)
 }
-var normalizeComponent = __webpack_require__(5)
+var normalizeComponent = __webpack_require__(4)
 /* script */
 var __vue_script__ = __webpack_require__(62)
 /* template */
@@ -50209,7 +50209,7 @@ var content = __webpack_require__(60);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("75ed5f14", content, false, {});
+var update = __webpack_require__(3)("75ed5f14", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -50228,7 +50228,7 @@ if(false) {
 /* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)(false);
+exports = module.exports = __webpack_require__(2)(false);
 // imports
 
 
@@ -51145,7 +51145,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(65)
 }
-var normalizeComponent = __webpack_require__(5)
+var normalizeComponent = __webpack_require__(4)
 /* script */
 var __vue_script__ = __webpack_require__(67)
 /* template */
@@ -51198,7 +51198,7 @@ var content = __webpack_require__(66);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("6add4cf2", content, false, {});
+var update = __webpack_require__(3)("6add4cf2", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -51217,7 +51217,7 @@ if(false) {
 /* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)(false);
+exports = module.exports = __webpack_require__(2)(false);
 // imports
 
 
@@ -55131,7 +55131,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(106)
 }
-var normalizeComponent = __webpack_require__(5)
+var normalizeComponent = __webpack_require__(4)
 /* script */
 var __vue_script__ = __webpack_require__(108)
 /* template */
@@ -55184,7 +55184,7 @@ var content = __webpack_require__(107);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("ae571346", content, false, {});
+var update = __webpack_require__(3)("ae571346", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -55203,7 +55203,7 @@ if(false) {
 /* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)(false);
+exports = module.exports = __webpack_require__(2)(false);
 // imports
 
 
@@ -56387,7 +56387,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(111)
 }
-var normalizeComponent = __webpack_require__(5)
+var normalizeComponent = __webpack_require__(4)
 /* script */
 var __vue_script__ = __webpack_require__(113)
 /* template */
@@ -56440,7 +56440,7 @@ var content = __webpack_require__(112);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("efe5eefe", content, false, {});
+var update = __webpack_require__(3)("efe5eefe", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -56459,7 +56459,7 @@ if(false) {
 /* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)(false);
+exports = module.exports = __webpack_require__(2)(false);
 // imports
 
 
@@ -57793,7 +57793,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(116)
 }
-var normalizeComponent = __webpack_require__(5)
+var normalizeComponent = __webpack_require__(4)
 /* script */
 var __vue_script__ = __webpack_require__(118)
 /* template */
@@ -57846,7 +57846,7 @@ var content = __webpack_require__(117);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("6d94ddb5", content, false, {});
+var update = __webpack_require__(3)("6d94ddb5", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -57865,7 +57865,7 @@ if(false) {
 /* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)(false);
+exports = module.exports = __webpack_require__(2)(false);
 // imports
 
 
@@ -58326,7 +58326,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(121)
 }
-var normalizeComponent = __webpack_require__(5)
+var normalizeComponent = __webpack_require__(4)
 /* script */
 var __vue_script__ = __webpack_require__(123)
 /* template */
@@ -58379,7 +58379,7 @@ var content = __webpack_require__(122);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("c0c63e1a", content, false, {});
+var update = __webpack_require__(3)("c0c63e1a", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -58398,7 +58398,7 @@ if(false) {
 /* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)(false);
+exports = module.exports = __webpack_require__(2)(false);
 // imports
 
 
@@ -58414,6 +58414,16 @@ exports.push([module.i, "\n.modal-content{\n    position: absolute!important;\n 
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -58632,6 +58642,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             username: null,
             password: null,
             id_rol: null,
+            listRoles: [],
             listModel: [],
             flagModal: 0,
             typeModal: 0, //1 = create; 2 = update
@@ -58699,6 +58710,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 var resp = response.data;
                 me.listModel = resp.users.data;
                 me.pagination = resp.pagination;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        listarRoles: function listarRoles() {
+            var me = this,
+                url = "roles/selectRoles";
+
+            axios.get(url).then(function (response) {
+                var resp = response.data;
+                me.listRoles = resp.roles;
             }).catch(function (error) {
                 console.log(error);
             });
@@ -58806,13 +58828,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         showModal: function showModal(action) {
             var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
+            this.listarRoles();
+
             if (action == "create") {
                 this.flagModal = 1;
                 this.typeModal = 1;
+                this.id_rol = "";
                 this.titleModal = "Agregar usuario";
             }
 
             if (action == "update") {
+                console.log(data);
                 this.flagModal = 1;
                 this.typeModal = 2;
                 this.titleModal = "Actualizar usuario";
@@ -59459,7 +59485,7 @@ var render = function() {
                         "label",
                         {
                           staticClass: "col-md-3 form-control-label",
-                          attrs: { for: "text-input" }
+                          attrs: { for: "telefono" }
                         },
                         [_vm._v("Teléfono")]
                       ),
@@ -59512,7 +59538,7 @@ var render = function() {
                         "label",
                         {
                           staticClass: "col-md-3 form-control-label",
-                          attrs: { for: "email-input" }
+                          attrs: { for: "email" }
                         },
                         [_vm._v("Email")]
                       ),
@@ -59552,7 +59578,74 @@ var render = function() {
                         "label",
                         {
                           staticClass: "col-md-3 form-control-label",
-                          attrs: { for: "text-input" }
+                          attrs: { for: "id_rol" }
+                        },
+                        [_vm._v("Rol")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-9" }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.id_rol,
+                                expression: "id_rol"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { name: "id_rol", id: "id_rol" },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.id_rol = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
+                          },
+                          [
+                            _c("option", { attrs: { value: "" } }, [
+                              _vm._v("--Seleccionar--")
+                            ]),
+                            _vm._v(" "),
+                            _vm._l(_vm.listRoles, function(rol) {
+                              return _c(
+                                "option",
+                                { key: rol.id, domProps: { value: rol.id } },
+                                [_vm._v(_vm._s(rol.nombre))]
+                              )
+                            })
+                          ],
+                          2
+                        ),
+                        _vm._v(" "),
+                        _vm.msjError.id_rol
+                          ? _c("small", {
+                              staticClass: "msj-error",
+                              domProps: {
+                                textContent: _vm._s(_vm.msjError.id_rol)
+                              }
+                            })
+                          : _vm._e()
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-3 form-control-label",
+                          attrs: { for: "username" }
                         },
                         [_vm._v("Username")]
                       ),
@@ -59570,9 +59663,9 @@ var render = function() {
                           staticClass: "form-control",
                           attrs: {
                             type: "text",
-                            id: "contacto",
-                            name: "contacto",
-                            placeholder: "Contacto"
+                            id: "username",
+                            name: "username",
+                            placeholder: "Ingrese nombre de usario"
                           },
                           domProps: { value: _vm.username },
                           on: {
@@ -59590,6 +59683,55 @@ var render = function() {
                               staticClass: "msj-error",
                               domProps: {
                                 textContent: _vm._s(_vm.msjError.username)
+                              }
+                            })
+                          : _vm._e()
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-3 form-control-label",
+                          attrs: { for: "password" }
+                        },
+                        [_vm._v("Contraseña")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-9" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.password,
+                              expression: "password"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "password",
+                            id: "password",
+                            name: "password",
+                            placeholder: "Ingrese su password"
+                          },
+                          domProps: { value: _vm.password },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.password = $event.target.value
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.msjError.password
+                          ? _c("small", {
+                              staticClass: "msj-error",
+                              domProps: {
+                                textContent: _vm._s(_vm.msjError.password)
                               }
                             })
                           : _vm._e()

@@ -149,7 +149,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-md-3 form-control-label" for="text-input">Teléfono</label>
+                                <label class="col-md-3 form-control-label" for="telefono">Teléfono</label>
                                 <div class="col-md-9">
                                     <input type="number" id="telefono" name="telefono"
                                            v-model.number="telefono"
@@ -159,31 +159,41 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-md-3 form-control-label" for="email-input">Email</label>
+                                <label class="col-md-3 form-control-label" for="email">Email</label>
                                 <div class="col-md-9">
                                     <input type="email" id="email" name="email" v-model="email" class="form-control" placeholder="Email cliente">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-md-3 form-control-label" for="text-input">Username</label>
+                                <label class="col-md-3 form-control-label" for="id_rol">Rol</label>
                                 <div class="col-md-9">
-                                    <input type="text" id="contacto" name="contacto"
+                                    <select class="form-control" name="id_rol" id="id_rol" v-model="id_rol">
+                                        <option value="">--Seleccionar--</option>
+                                        <option v-for="rol in listRoles" :key="rol.id" :value="rol.id">{{rol.nombre}}</option>
+                                    </select>
+                                    <small class="msj-error" v-if="msjError.id_rol" v-text="msjError.id_rol"></small>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="username">Username</label>
+                                <div class="col-md-9">
+                                    <input type="text" id="username" name="username"
                                            v-model="username"
                                            class="form-control"
-                                           placeholder="Contacto">
+                                           placeholder="Ingrese nombre de usario">
                                     <small class="msj-error" v-if="msjError.username" v-text="msjError.username"></small>
                                 </div>
                             </div>
-                           <!-- <div class="form-group row">
-                                <label class="col-md-3 form-control-label" for="text-input">Dirección</label>
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label" for="password">Contraseña</label>
                                 <div class="col-md-9">
-                                    <input type="text" id="telefono_contacto" name="telefono_contacto"
-                                           v-model="telefono_contacto"
+                                    <input type="password" id="password" name="password"
+                                           v-model="password"
                                            class="form-control"
-                                           placeholder="Teléfono contacto">
-                                    <small class="msj-error" v-if="msjError.telefono_contacto" v-text="msjError.telefono_contacto"></small>
+                                           placeholder="Ingrese su password">
+                                    <small class="msj-error" v-if="msjError.password" v-text="msjError.password"></small>
                                 </div>
-                            </div>-->
+                            </div>
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -216,6 +226,7 @@
                 username: null,
                 password: null,
                 id_rol: null,
+                listRoles: [],
                 listModel: [],
                 flagModal: 0,
                 typeModal: 0, //1 = create; 2 = update
@@ -281,6 +292,19 @@
                         var resp = response.data;
                         me.listModel = resp.users.data;
                         me.pagination = resp.pagination;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            },
+            listarRoles(){
+                let me = this,
+                    url = "roles/selectRoles";
+
+                axios.get(url)
+                    .then(function (response) {
+                        var resp = response.data;
+                        me.listRoles = resp.roles;
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -389,13 +413,17 @@
                 })
             },
             showModal(action, data=null){
+                this.listarRoles();
+
                 if(action == "create"){
                     this.flagModal = 1;
                     this.typeModal = 1;
+                    this.id_rol = "";
                     this.titleModal = "Agregar usuario";
                 }
 
                 if(action == "update"){
+                    console.log(data);
                     this.flagModal = 1;
                     this.typeModal = 2;
                     this.titleModal = "Actualizar usuario";

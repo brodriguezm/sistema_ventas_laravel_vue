@@ -37,7 +37,7 @@ class RolController extends Controller
     }
 
     public function selectRoles(Request $request){
-        cif($this->validateRequest($request)) return redirect('/');
+        if($this->validateRequest($request)) return redirect('/');
 
         $roles = Rol::where('condicion', '=', '1')
             ->select('id', 'nombre')
