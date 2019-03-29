@@ -58746,6 +58746,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (!this.num_documento) {
                 this.msjError.num_documento = 'Debe ingresar un número de documento';flagError = true;
             }
+            if (!this.id_rol || this.id_rol === "") {
+                this.msjError.id_rol = 'Debe seleccionar un rol para el usuario';flagError = true;
+            }
+            if (!this.username || this.username === "") {
+                this.msjError.username = 'Debe ingresar un nombre de usuario';flagError = true;
+            }
+            if (!this.password || this.password === "") {
+                this.msjError.password = 'Debe ingresar un password ';flagError = true;
+            }
             return flagError;
         },
         createModelo: function createModelo() {
@@ -58759,7 +58768,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 'direccion': this.direccion,
                 'telefono': this.telefono,
                 'email': this.email,
-                'username': this.contacto,
+                'username': this.username,
                 'password': this.password,
                 'id_rol': this.id_rol
             };
@@ -58782,7 +58791,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 'direccion': this.direccion,
                 'telefono': this.telefono,
                 'email': this.email,
-                'username': this.contacto,
+                'username': this.username,
                 'password': this.password,
                 'id_rol': this.id_rol
             };

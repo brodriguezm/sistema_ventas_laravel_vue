@@ -72,7 +72,7 @@ class UserController extends Controller
             $user = new User();
             //Se setea el mismo id que se genera en la clase persona
             $user->id = $persona->id;
-            $user->usuario = $request->usuario;
+            $user->username = $request->username;
             $user->password = bcrypt($request->password);
             $user->condicion = '1';
             $user->id_rol = $request->id_rol;
@@ -90,7 +90,7 @@ class UserController extends Controller
         if($this->validateRequest($request)) return redirect('/');
         try{
             DB::beginTransaction();
-
+            echo "entro";
             $user= User::findOrFail($request->id);
             $persona = Persona::findOrFail($user->id);
 
@@ -107,10 +107,11 @@ class UserController extends Controller
             $user->condicion = 1;
             $user->id_rol = $request->id_rol;
             $user->save();
-
+            echo "commit";
             DB::commit();
         }
         catch (\Exception $ex){
+            echo $ex->getMessage();
             DB::rollBack();
         }
     }
