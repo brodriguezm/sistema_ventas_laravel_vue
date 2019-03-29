@@ -381,11 +381,11 @@
                 let url = "",
                     textMsj = "";
                 if(model.condicion){
-                    url = "categorias/desactivar";
+                    url = "/desactivar";
                     textMsj = 'Se desactivará el registro'
                 }
                 else{
-                    url = "categorias/activar";
+                    url = "/activar";
                     textMsj = 'Se activará el registro'
                 }
 
@@ -400,12 +400,12 @@
                     cancelButtonText: 'Cancelar'
                 }).then((result) => {
                     if (result.value) {
-                        axios.put(me.path+url, categoria)
+                        axios.put(me.path+url, model)
                             .then(reponse => {
                                 me.listarModelo();
                                 swalWithBootstrapButtons.fire(
                                     'Hecho!',
-                                    'El registro a sido'+(categoria.condicion)?'desactivado':'activado',
+                                    'El registro a sido'+(model.condicion)?'desactivado':'activado',
                                     'success'
                                 );
                             })

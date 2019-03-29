@@ -58807,10 +58807,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var url = "",
                 textMsj = "";
             if (model.condicion) {
-                url = "categorias/desactivar";
+                url = "/desactivar";
                 textMsj = 'Se desactivará el registro';
             } else {
-                url = "categorias/activar";
+                url = "/activar";
                 textMsj = 'Se activará el registro';
             }
 
@@ -58825,7 +58825,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 cancelButtonText: 'Cancelar'
             }).then(function (result) {
                 if (result.value) {
-                    axios.put(me.path + url, categoria).then(function (reponse) {
+                    axios.put(me.path + url, model).then(function (reponse) {
                         me.listarModelo();
                         swalWithBootstrapButtons.fire('Hecho!',  true ? 'desactivado' : 'activado', 'success');
                     }).catch(function (error) {
