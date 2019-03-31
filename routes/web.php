@@ -55,6 +55,6 @@ Route::put('/user/desactivar', 'UserController@desactivate');
 
 /*Login*/
 Route::get('/', 'Auth\LoginController@showLoginForm');
-Route::post('/login', 'Auth\LoginController@ogin')->name('login');
+Route::post('/login', 'Auth\LoginController@login')->name('login');
 
 Route::get('/home', 'HomeController@index')->name('home');

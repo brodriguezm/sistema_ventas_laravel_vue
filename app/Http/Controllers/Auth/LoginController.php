@@ -14,16 +14,24 @@ class LoginController extends Controller
         return view('auth.login');
     }
     
-    public function login (Request $request){
-        $this->validate($request, [
-            'username' => 'required|string',
-            'password' => 'required|string',
-        ]);
+    public function login(Request $request){
+
+        $this->validateLogin($request);
 
         if(Auth::attempt(['username' => $request->username, 'password' => $request->password, 'condicion' => 1])){
             return redirect()->route('dashboard');
         }
 
-        return back();
+//        return view('auth.login');
+        return back()
+            ->withErrors(['username' => trans('auth.failed')])
+            ->withInput(request(['username']));
+    }
+
+    public function validateLogin(Request $request){
+        $this->validate($request, [
+            'username' => 'required|string',
+            'password' => 'required|string',
+        ]);
     }
 }
