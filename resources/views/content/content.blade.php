@@ -9,7 +9,15 @@
 
     <articulo v-if="IdMenu==2"></articulo>
 
+    <template v-if="IdMenu==3">
+        <h1>Ingresos</h1>
+    </template>
+
     <proveedor v-if="IdMenu==4"></proveedor>
+
+    <template v-if="IdMenu==5">
+        <h1>Ventas</h1>
+    </template>
 
     <cliente v-if="IdMenu==6"></cliente>
 
@@ -17,5 +25,20 @@
 
     <rol v-if="IdMenu==8"></rol>
 
-    <h1 v-if="IdMenu==12"> Saludos desde menu 12</h1>
+    <template v-if="IdMenu==9">
+        <h1>Reporte de Ingresos</h1>
+    </template>
+
+    <template v-if="IdMenu==10">
+        <h1>Reporte de Ingresos</h1>
+    </template>
+
+    <template v-if="IdMenu==11">
+        <h1>Ayuda</h1>
+    </template>
+
+    <template v-if="IdMenu==12">
+        <h1>Acerca de </h1>
+    </template>
+
 @endsection
