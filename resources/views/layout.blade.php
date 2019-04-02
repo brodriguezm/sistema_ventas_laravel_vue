@@ -70,7 +70,15 @@
         </header>
 
         <div class="app-body">
-            
+
+            @if(Auth::check())
+                @if(Auth::user()->id_rol == 1)
+                    @include('plantilla.sidebaradministrador')
+                @if(Auth::user()->id_rol == 2)
+                    @include('plantilla.sidebarvendedor')
+                @if(Auth::user()->id_rol == 3)
+                    @include('plantilla.sidebaralmacenero')
+            @endif
         @include('layout.sidebar')
             <!-- Contenido Principal -->
         @yield('content')
